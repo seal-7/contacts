@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .controller import *
 from user.controller import *
@@ -11,12 +11,20 @@ def add(request):
 			'user' : request.POST.get('user',''),
 			'contactName' : request.POST.get('contactName',''),
 			'contacts' : request.POST.get('contacts','').split(',')			
-		}
-		print(data_to_store)
+		}		
 		user = addContact(data_to_store)
-		response = HttpResponse(str(user))
+		response = redirect('/phonebook/add/')
 	else:
 		#GET
-		all_users = getAllUsers()
-		response = render(request,'phonebook/add.html',{'users':all_users})
+		response = render(request,'phonebook/add.html',{'users':getAllUsers()})
+	return response
+
+def merge(request):
+	if(request.method == 'POST'):
+		merge_list = getMergeList(request.POST.get('user',''))
+		return HttpResponse(merge_list)
+	else:
+		#GET
+		response = render(request,'phonebook/merge.html',{'users':getAllUsers()})
+
 	return response

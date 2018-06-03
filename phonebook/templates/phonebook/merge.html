@@ -15,7 +15,7 @@
 	</div>
 
 	<div class="form-group">  
-		<form action="/phonebook/add/" method="post">{% csrf_token %}
+		<form action="/phonebook/merge/" method="post">{% csrf_token %}
 			<label for="user">Select user:</label>
 			<select class="form-control" name="user" required>
 				{% for user in users %}
@@ -23,15 +23,7 @@
 				{% endfor %}   
 			</select>
 			<br>
-			<div class="form-group">
-			  <label for="name">Contacts Name:</label>
-			  <input type="text" class="form-control" name="contactName" id="contactName" required>
-			</div>
-			<div class="form-group">
-			  <label for="contacts">Contacts Details: <i>[]</i></label>
-			  <input type="text" class="form-control" name="contacts" id="contacts" required>
-			</div>
-	  	<button type="submit" class="btn btn-default">Add</button>
+	  	<button type="submit" class="btn btn-default">Get Merge Suggestion</button>
 		</form>
 	</div> 
 </body>
