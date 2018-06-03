@@ -99,41 +99,27 @@
 
         </div>
     </div>
-    {% if message %}
-    	{% if type == 'error' %}    		
-			<div class="alert alert-info">
-			  <strong>Info!</strong> {{message}}
-			</div>
-    	{% else %}
-	    	<div class="alert alert-success">
-			  <strong>Success!</strong> {{message}}
-			</div>
-		{% endif %}	
-	{% endif %}
-	<div class="form-group">  
-		<form action="/phonebook/add/" method="post">{% csrf_token %}
-			<label for="user">Select user:</label>
-			<select class="form-control" name="user" required>
-                <option disabled selected value> -- select an option -- </option>
-				{% for user in users %}
-					<option>{{ user }}</option>
-				{% endfor %}   
-			</select>
-			<br>
-			<div class="form-group">
-			  <label for="name">Contacts Name:</label>
-			  <input type="text" class="form-control" name="contactName" id="contactName" required>
-			</div>
-			<div class="form-group">
-			  <label for="email">Email : <i>[]</i></label>
-			  <input type="text" class="form-control" name="email" id="email" multiple pattern="^\w+@\w+\.\w+(,\s*\w+@\w+\.\w+)*$">
-			</div>
-            <div class="form-group">
-              <label for="contacts">Phone : <i>[]</i></label>
-              <input type="text" class="form-control" name="phone" id="contacts" multiple pattern="^([0-9]+(,[0-9]*)*)$">
+     {% if message %}
+        {% if type == 'error' %}            
+            <div class="alert alert-info">
+              <strong>Info!</strong> {{message}}
             </div>
-	  	<button type="submit" class="btn btn-default">Add</button>
-		</form>
-	</div>   
+        {% else %}
+            <div class="alert alert-success">
+              <strong>Success!</strong> {{message}}
+            </div>
+        {% endif %} 
+    {% endif %}    
+	<form action="/user/delete/" method="post" onsubmit="return confirm('All Records will be deleted?');">{% csrf_token %}
+		<label for="user">Select user:</label>
+            <select class="form-control" name="userName" required>
+                <option disabled selected value> -- select an option -- </option>
+                {% for user in users %}
+                    <option>{{ user }}</option>
+                {% endfor %}   
+            </select>
+        <br>    
+        <button type="submit" class="btn btn-default" >DELETE</button>
+	</form>	    
 </body>
 </html>

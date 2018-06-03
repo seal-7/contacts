@@ -11,23 +11,23 @@ def addContact(data_to_store):
 	user_in_email = EmailToContactMap.objects.filter(name=data_to_store['user'])[0]
 	
 	for contact in data_to_store['contacts']:
-		if('e' in contact):
-			#replace the above condition with if('e' in contact):
-			#email
-			if not user_in_email.data.get(contact):
-				user_in_email.data[contact] = []
+		if(contact != ''):
+			if('@' in contact):
+				#replace the above condition with if('e' in contact):
+				#email
+				if not user_in_email.data.get(contact):
+					user_in_email.data[contact] = []
 
-			user_in_email.data[contact].append(data_to_store['contactName'])
-			
+				user_in_email.data[contact].append(data_to_store['contactName'])
 				
-		else:
-			if not user_in_phone.data.get(contact):
-				user_in_phone.data[contact] = []
-			user_in_phone.data[contact].append(data_to_store['contactName'])
+					
+			else:
+				if not user_in_phone.data.get(contact):
+					user_in_phone.data[contact] = []
+				user_in_phone.data[contact].append(data_to_store['contactName'])
 	
 	user_in_phone.save()
-	user_in_email.save()			
-	return user.data
+	user_in_email.save()				
 
 def getMergeList(userName):
 
@@ -35,17 +35,6 @@ def getMergeList(userName):
 	phone_map = PhoneToContactMap.objects.filter(name=userName)[0].data
 	email_map = EmailToContactMap.objects.filter(name=userName)[0].data
 
-	# index_to_contact = list(contact_map.keys())
-	# contact_to_index = {}
-	# index = 0
-	# for contact in index_to_contact:
-	# 	contact_to_index[contact] = index
-	# 	index+=1
-	# print(contact_map)
-	# print(phone_map)
-	# print(email_map)
-	# print(index_to_contact)
-	# print(contact_to_index)
 	U = UnionFind()
 
 	for phone in list(phone_map.keys()):

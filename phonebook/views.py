@@ -10,19 +10,25 @@ def add(request):
 		data_to_store={
 			'user' : request.POST.get('user',''),
 			'contactName' : request.POST.get('contactName',''),
-			'contacts' : request.POST.get('contacts','').split(',')			
-		}		
-		user = addContact(data_to_store)
-		response = redirect('/phonebook/add/')
+			'contacts' : request.POST.get('email','').split(',') + request.POST.get('phone','').split(',')			
+		}				
+		addContact(data_to_store)
+		response = render(request,'phonebook/add.html',{'users':getAllUsers(),'message':'Contact Added succesfully!','type':'success'})
+
 	else:
 		#GET
-		response = render(request,'phonebook/add.html',{'users':getAllUsers()})
+		users = getAllUsers()
+		if users == []:
+			response = render(request,'phonebook/add.html',{'users':users,'message':'Create User First','type':'error'})
+		else:
+			response = render(request,'phonebook/add.html',{'users':users})
 	return response
 
 def merge(request):
 	if(request.method == 'POST'):
+		#POST
 		merge_list = getMergeList(request.POST.get('user',''))
-		return HttpResponse(merge_list)
+		return render(request,'phonebook/mergeList.html',{'mergeList':str(merge_list)})
 	else:
 		#GET
 		response = render(request,'phonebook/merge.html',{'users':getAllUsers()})
